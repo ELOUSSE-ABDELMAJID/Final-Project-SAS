@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // Structures
 struct Product {
@@ -12,10 +13,22 @@ struct Product {
 	char	nom[25];
 	int		quantity;
 	float	prix;
+	float	prixTTc;
+	char	date[45];
 };
 
 // Functions
-void    *add_product(int n);
-void    func_menu();
+void    add_product(int n);
+void    display_menu();
+void	list_products();
+void    listProductsByName();
+void    listProductsByPrice();
+void	listProductByIndex(int index);
+void    buy_product();
+void    findProductsByCode();
+void    findProductsByQuantity();
+void    displaySearchMenu();
+void    findInferiourProductsQuantity();
+void    modifyProductQuantity();
 
 #endif
