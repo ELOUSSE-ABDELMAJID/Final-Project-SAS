@@ -13,7 +13,7 @@ struct Product {
 	char	nom[25];
 	int		quantity;
 	float	prix;
-	float	prixTTc;
+	float	prixTtc;
 	char	date[45];
 };
 

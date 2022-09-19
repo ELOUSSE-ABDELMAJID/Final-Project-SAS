@@ -122,6 +122,11 @@ void    listProductsByPrice()
     list_products();
 }
 
+float   calculePrixTtc(float prix)
+{
+    return (prix * 0.15);
+}
+
 void	list_products()
 {
     int i = 0;
@@ -132,10 +137,9 @@ void	list_products()
 	while (i < size)
     {
         printf("--> Product ID : %d\n", i+1);
-        printf("->Code : %s\n",prod[i].code);
         printf("->Nom : %s\n",prod[i].nom);
-        printf("->Quantity : %d\n",prod[i].quantity);
         printf("->Prix : %.2f\n",prod[i].prix);
+        printf("->PrixTTC : %.2f\n",prod[i].prixTtc);
         i++;
     }
 }
@@ -143,10 +147,9 @@ void	list_products()
 void	listProductByIndex(int index)
 {
     printf("--> Product ID : %d\n", index+1);
-    printf("-> Code : %s\n",prod[index].code);
     printf("-> Nom : %s\n",prod[index].nom);
-    printf("-> Quantity : %d\n",prod[index].quantity);
     printf("-> Prix : %.2f\n",prod[index].prix);
+    printf("-> PrixTTC : %.2f\n",prod[index].prixTtc);
 }
 
 void    buy_product()
@@ -176,7 +179,8 @@ void    buy_product()
     scanf("%d", &quantite);
     if (prod[i].quantity >= quantite)
     {
-        prod[i].quantity = prod[i].quantity - quantite;
+        prod[i].quantity -= quantite;
+        prod[i].prixTtc = calculePrixTtc(prod[i].prixTtc);
         printf("\t\t\t  #####################################################################################################\n");
 	    printf("\t\t\t                                                Purchase Complete                                      \n");
 	    printf("\t\t\t  #####################################################################################################\n");
