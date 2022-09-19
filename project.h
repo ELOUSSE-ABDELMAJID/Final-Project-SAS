@@ -7,7 +7,7 @@
 #include <string.h>
 #include <time.h>
 
-// Structures
+// Structure
 struct Product {
 	char	code[15];
 	char	nom[25];
@@ -30,5 +30,7 @@ void    findProductsByQuantity();
 void    displaySearchMenu();
 void    findInferiourProductsQuantity();
 void    modifyProductQuantity();
+void    remove_product();
+void    displayStatistiqueMenu();
 
 #endif
