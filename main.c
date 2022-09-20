@@ -309,7 +309,7 @@ void    findProductsByCode()
         }
         i++;
     }
-    display_menu();
+    displaySearchMenu();
 }
 
 void    findProductsByQuantity()
@@ -336,7 +336,7 @@ void    findProductsByQuantity()
         printf("\t\t\t  #####################################################################################################\n");
         printf("\n");
     }
-    display_menu();
+    displaySearchMenu();
 }
 
 void    findInferiourProductsQuantity()
@@ -350,7 +350,7 @@ void    findInferiourProductsQuantity()
             listProductByIndex(i);
         i++;
     }
-    display_menu();
+    displaySearchMenu();
 }
 
 // Staitstiques Functions
