@@ -14,7 +14,7 @@ struct Product {
 	int		quantity;
 	float	prix;
 	float	prixTtc;
-	char	date[45];
+	struct	tm tim;
 };
 
 // Functions
@@ -32,5 +32,6 @@ void    findInferiourProductsQuantity();
 void    modifyProductQuantity();
 void    remove_product();
 void    displayStatistiqueMenu();
+void    totalProductsSold();
 
 #endif

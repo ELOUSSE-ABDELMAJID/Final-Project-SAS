@@ -19,7 +19,7 @@ void    displayStatistiqueMenu()
     switch (op)
     {
     case 1:
-        
+        totalProductsSold();
         break;
     case 2:
         

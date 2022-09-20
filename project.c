@@ -48,15 +48,16 @@ void  add_product(int n)
     while (i < n)
     {
         fflush(stdin);
-        printf("--> Product Number : %d\n", size+1);
-        printf("Entrez le code du Produit :\n");
+        printf("\t\t\t  # Product Number : %d\n", size+1);
+        printf("\t\t\t  Entrez le code du Produit : ");
         scanf("%s", prod[size].code);
-        printf("Entrez le nom du Produit :\n");
+        printf("\t\t\t  Entrez le nom du Produit : ");
         scanf("%s", prod[size].nom);
-        printf("Entrez la quantite du Produit :\n");
+        printf("\t\t\t  Entrez la quantite du Produit : ");
         scanf("%d", &prod[size].quantity);
-        printf("Entrez le prix du Produit :\n");
+        printf("\t\t\t  Entrez le prix du Produit : ");
         scanf("%f", &prod[size].prix);
+        prod[i].prixTtc = prod[i].prix * 0.15 + prod[i].prix;
         size++;
         i++;
     }
@@ -88,7 +89,7 @@ void    listProductsByName()
          }
       }
    }
-   printf("\nLes Produits selon l'ordre alphabétique croissant du nom :\n");
+   printf("\n\t\t\t  Les Produits selon l'ordre alphabétique croissant du nom :\n");
    list_products();
 }
 
@@ -97,7 +98,7 @@ void    listProductsByPrice()
     int i, j;
     struct Product tmp;
 
-    printf("\nLes Produits selon l'ordre décroissant du prix :\n");
+    printf("\n\t\t\t  Les Produits selon l'ordre décroissant du prix :\n");
     for (i = 0; i < size; i++) 
     {
         for (j = i + 1; j < size; j++)
@@ -122,34 +123,28 @@ void    listProductsByPrice()
     list_products();
 }
 
-float   calculePrixTtc(float prix)
-{
-    return (prix * 0.15);
-}
-
 void	list_products()
 {
     int i = 0;
-/*
-    printf("------------------------------------------------------------------------------------\n");
-    printf("|  PROD ID  |  PROD CODE | PROD NAME |  PROD QUANTITY  | PROD PRICE | SALES |\n");
-    printf("------------------------------------------------------------------------------------\n");*/
+
+    printf("\t\t\t  -----------------------------------------------------\n");
+    printf("\t\t\t  |  PROD ID  | PROD NOM |  PROD PRIX  | PROD PRIXTTC | \n");
+    printf("\t\t\t  -----------------------------------------------------\n");
 	while (i < size)
     {
-        printf("--> Product ID : %d\n", i+1);
-        printf("->Nom : %s\n",prod[i].nom);
-        printf("->Prix : %.2f\n",prod[i].prix);
-        printf("->PrixTTC : %.2f\n",prod[i].prixTtc);
+        printf("\t\t\t      %d\t\t%s\t   %.2f\t     %.2f\n", i+1, prod[i].nom, prod[i].prix, prod[i].prixTtc);
+        printf("\t\t\t  -----------------------------------------------------\n");
         i++;
     }
 }
 
 void	listProductByIndex(int index)
 {
-    printf("--> Product ID : %d\n", index+1);
-    printf("-> Nom : %s\n",prod[index].nom);
-    printf("-> Prix : %.2f\n",prod[index].prix);
-    printf("-> PrixTTC : %.2f\n",prod[index].prixTtc);
+    printf("\t\t\t  -----------------------------------------------------\n");
+    printf("\t\t\t  |  PROD ID  | PROD NOM |  PROD PRIX  | PROD PRIXTTC | \n");
+    printf("\t\t\t  -----------------------------------------------------\n");
+    printf("\t\t\t      %d\t\t%s\t   %.2f\t     %.2f\n", index+1, prod[index].nom, prod[index].prix, prod[index].prixTtc);
+    printf("\t\t\t  -----------------------------------------------------\n");
 }
 
 void    buy_product()
@@ -157,7 +152,10 @@ void    buy_product()
     char id[15];
     int i = 0;
     int quantite;
-    printf("Entrez le Code de Produit que vous voulez acheter : ");
+    time_t t;
+
+    t = time(NULL);
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez acheter : ");
     scanf("%s", id);
     while (i < size)
     {
@@ -175,12 +173,12 @@ void    buy_product()
         }
         i++;
     }
-    printf("Entrez la quantite que vous voulez acheter : ");
+    printf("\t\t\t  Entrez la quantite que vous voulez acheter : ");
     scanf("%d", &quantite);
     if (prod[i].quantity >= quantite)
     {
         prod[i].quantity -= quantite;
-        prod[i].prixTtc = calculePrixTtc(prod[i].prixTtc);
+        prod[i].tim = *localtime(&t);
         printf("\t\t\t  #####################################################################################################\n");
 	    printf("\t\t\t                                                Purchase Complete                                      \n");
 	    printf("\t\t\t  #####################################################################################################\n");
@@ -200,7 +198,7 @@ void    findProductsByCode()
     char id[15];
     int i = 0;
 
-    printf("Entrez le Code de Produit que vous voulez Rechercher : ");
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez Rechercher : ");
     scanf("%s", id);
     while (i < size)
     {
@@ -227,7 +225,7 @@ void    findProductsByQuantity()
     int i = 0;
     int found = 1;
 
-    printf("Entrez la quantite de Produit que vous voulez Rechercher : ");
+    printf("\t\t\t  Entrez la quantite de Produit que vous voulez Rechercher : ");
     scanf("%d", &quantite);
     while (i < size)
     {
@@ -252,7 +250,7 @@ void    findInferiourProductsQuantity()
 {
     int i = 0;
 
-    printf("Les Produits avec une quantite inferiour a 3 : \n");
+    printf("\t\t\t  Les Produits avec une quantite inferiour a 3 : \n");
     while (i < size)
     {
         if (prod[i].quantity < 3)
@@ -268,13 +266,13 @@ void    modifyProductQuantity()
     char id[15];
     int quantite;
 
-    printf("Entrez le Code de Produit que vous voulez mofifier son quantite : ");
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez mofifier son quantite : ");
     scanf("%s", id);
     while (i < size)
     {
         if (strcmp(prod[i].code, id) == 0)
         {
-            printf("Entrez la quantity que vous voulez ajouter : ");
+            printf("\t\t\t  Entrez la quantity que vous voulez ajouter : ");
             scanf("%d", &quantite);
             prod[i].quantity += quantite;
             break;
@@ -298,7 +296,7 @@ void    remove_product()
     char id[15];
     int i = 0;
 
-    printf("Entrez le Code de Produit que vous voulez Supprimer : ");
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez Supprimer : ");
     scanf("%s", id);
     while (i < size)
     {
@@ -332,11 +330,16 @@ void    remove_product()
 void    totalProductsSold()
 {
     int i = 0;
+    time_t t;
+    float total = 0;
+
+    t = time(NULL);
     while (i < size)
     {
-        
+       if (prod[i].tim = *localtime(&t))
+            total += prod[i].prix;
     }
-    
+    printf("\t\t\t  Le total des prix des produits vendus Ce journée : %.2f", total);
 }
 
 // main function 
