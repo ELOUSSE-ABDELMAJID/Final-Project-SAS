@@ -58,6 +58,7 @@ void  add_product(int n)
         printf("\t\t\t  Entrez le prix du Produit : ");
         scanf("%f", &prod[size].prix);
         prod[i].prixTtc = prod[i].prix * 0.15 + prod[i].prix;
+
         size++;
         i++;
     }
@@ -152,9 +153,10 @@ void    buy_product()
     char id[15];
     int i = 0;
     int quantite;
-    time_t t;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
 
-    t = time(NULL);
     printf("\t\t\t  Entrez le Code de Produit que vous voulez acheter : ");
     scanf("%s", id);
     while (i < size)
@@ -178,7 +180,10 @@ void    buy_product()
     if (prod[i].quantity >= quantite)
     {
         prod[i].quantity -= quantite;
-        prod[i].tim = *localtime(&t);
+        prod[i].date[0] = date->tm_mday;
+        prod[i].date[1] = date->tm_mon+1;
+        prod[i].date[2] = date->tm_year+1900;
+        printf("Current Date: %d-%d-%d\n", prod[i].date[0], prod[i].date[1], prod[i].date[2]);
         printf("\t\t\t  #####################################################################################################\n");
 	    printf("\t\t\t                                                Purchase Complete                                      \n");
 	    printf("\t\t\t  #####################################################################################################\n");
@@ -327,20 +332,41 @@ void    remove_product()
     display_menu();
 }
 
-void    totalProductsSold()
-{
-    int i = 0;
-    time_t t;
-    float total = 0;
+// float    totalProductsSold()
+// {
+//     int i = 0;
+//     time_t t;
+//     float total = 0;
+//     struct	tm date;
 
-    t = time(NULL);
-    while (i < size)
-    {
-       if (prod[i].tim = *localtime(&t))
-            total += prod[i].prix;
-    }
-    printf("\t\t\t  Le total des prix des produits vendus Ce journée : %.2f", total);
-}
+//     t = time(NULL);
+//     date = *localtime(&t);
+//     while (i < size)
+//     {
+//        if (prod[i].tim.tm_mday == date.tm_mday && prod[i].tim.tm_mon+1 == date.tm_mon+1 && prod[i].tim.tm_year+1900 == date.tm_year+1900)
+//             total += prod[i].prix;
+//     }
+//     return total;
+// }
+
+// float    averageProductsSold()
+// {
+//     int i = 0;
+//     time_t t;
+//     float average = 0;
+//     int count = 0;
+//     struct	tm date;
+
+//     t = time(NULL);
+//     date = *localtime(&t);
+//     while (i < size)
+//     {
+//        if (prod[i].tim.tm_mday == date.tm_mday && prod[i].tim.tm_mon+1 == date.tm_mon+1 && prod[i].tim.tm_year+1900 == date.tm_year+1900)
+//             count++;
+//     }
+//     average = count / totalProductsSold(); 
+//     return average;
+// }
 
 // main function 
 int main()
