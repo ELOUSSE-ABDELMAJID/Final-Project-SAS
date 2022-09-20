@@ -23,11 +23,11 @@ void    displayStatistiqueMenu()
     switch (op)
     {
     case 1:
-        //printf("\t\t\t  Le total des prix des produits vendus Ce journee : %.2f\n", totalProductsSold());
+        printf("\t\t\t  Le total des prix des produits vendus Ce journee : %.2f\n", totalProductsSold());
         display_menu();
         break;
     case 2:
-        //printf("\t\t\t  la moyenne des prix des produits vendus Ce journee : %.2f", averageProductsSold());
+        printf("\t\t\t  la moyenne des prix des produits vendus Ce journee : %.2f\n", averageProductsSold());
         break;
     case 3:
         

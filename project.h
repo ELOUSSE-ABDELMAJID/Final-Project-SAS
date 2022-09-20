@@ -49,12 +49,13 @@ void    findInferiourProductsQuantity();
 // Statistiques Functions
 
 float    totalProductsSold();
-void    averageProductsSold();
+float    averageProductsSold();
 
 // Files Functions
  
 void    saveDataFile();
 void    readDataFromFile();
+
 void    exit_funct();
 
 #endif

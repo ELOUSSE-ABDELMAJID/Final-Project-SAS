@@ -1,8 +1,9 @@
 #include "project.h"
 
 struct Product prod[100];
+struct Product sold[100];
 static int size = 0;
-static int line = 0;
+static int s = 0;
 // Files Functions
 
 void    readDataFromFile()
@@ -14,7 +15,6 @@ void    readDataFromFile()
        if (feof(database))
             break;
        size++;
-       line++;
     }
     fclose(database);
 }
@@ -97,6 +97,16 @@ void    buy_product()
         prod[i].date[0] = date->tm_mday;
         prod[i].date[1] = date->tm_mon+1;
         prod[i].date[2] = date->tm_year+1900;
+        // Save products sold in the sold array
+        strcpy(sold[s].code,prod[i].code);
+        strcpy(sold[s].nom,prod[i].nom);
+        sold[s].quantity = prod[i].quantity;
+        sold[s].prix = prod[i].prix;
+        sold[s].prixTtc = prod[i].prixTtc;
+        sold[s].date[0] = prod[i].date[0];
+        sold[s].date[1] = prod[i].date[1];
+        sold[s].date[2] = prod[i].date[2];
+        s++;
         printf("\t\t\t  #####################################################################################################\n");
 	    printf("\t\t\t                                                PRODUCT BUY SUCCESSFUL                                 \n");
 	    printf("\t\t\t  #####################################################################################################\n");
@@ -157,9 +167,16 @@ void    remove_product()
         {
             for (int j = i; j < size - 1; j++)
             {
-                prod[j] = prod[j + 1];
-                size--;
+                strcpy(prod[j].code,prod[j + 1].code);
+                strcpy(prod[j].nom,prod[j + 1].nom);
+                prod[j].quantity = prod[j + 1].quantity;
+                prod[j].prix = prod[j + 1].prix;
+                prod[j].prixTtc = prod[j + 1].prixTtc;
+                prod[j].date[0] = prod[j + 1].date[0];
+                prod[j].date[1] = prod[j + 1].date[1];
+                prod[j].date[2] = prod[j + 1].date[2];
             }
+            size--;
             printf("\t\t\t  #####################################################################################################\n");
 	        printf("\t\t\t                                                Product Removed Successfully                           \n");
 	        printf("\t\t\t  #####################################################################################################\n");
@@ -338,38 +355,43 @@ void    findInferiourProductsQuantity()
 
 // Staitstiques Functions
 
-// float    totalProductsSold()
-// {
-//     int i = 0;
-//     float total = 0;
-//     int index;
+float    totalProductsSold()
+{
+    int i = 0;
+    float total = 0;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
 
-//     while (i < n)
-//     {
-//         total += sold[i].prix;
-//         i++;
-//     }
-//     return total;
-// }
+    while (i < s)
+    {
+        if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
+            total += sold[i].prix;
+        i++;
+    }
+    return total;
+}
 
-// float    averageProductsSold()
-// {
-//     int i = 0;
-//     time_t t;
-//     float average = 0;
-//     int count = 0;
-//     struct	tm date;
+float    averageProductsSold()
+{
+    int i = 0;
+    float average = 0;
+    int count = 0;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
 
-//     t = time(NULL);
-//     date = *localtime(&t);
-//     while (i < size)
-//     {
-//        if (prod[i].tim.tm_mday == date.tm_mday && prod[i].tim.tm_mon+1 == date.tm_mon+1 && prod[i].tim.tm_year+1900 == date.tm_year+1900)
-//             count++;
-//     }
-//     average = count / totalProductsSold(); 
-//     return average;
-// }
+    while (i < s)
+    {
+       if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
+            count++;
+        i++;
+    }
+    average = totalProductsSold() / count; 
+    return average;
+}
+
+float
 
 // main function 
 
