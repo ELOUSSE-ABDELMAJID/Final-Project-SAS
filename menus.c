@@ -24,16 +24,19 @@ void    displayStatistiqueMenu()
     {
     case 1:
         printf("\t\t\t  Le total des prix des produits vendus Ce journee : %.2f\n", totalProductsSold());
-        display_menu();
+        displayStatistiqueMenu();
         break;
     case 2:
         printf("\t\t\t  la moyenne des prix des produits vendus Ce journee : %.2f\n", averageProductsSold());
+        displayStatistiqueMenu()
         break;
     case 3:
-        
+        printf("\t\t\t  Le Max des prix des produits vendus Ce journee : %.2f\n", maxProductsSold());
+        displayStatistiqueMenu()
         break;
     case 4:
-        
+        printf("\t\t\t  le Mix des prix des produits vendus Ce journee : %.2f\n", minProductsSold());
+        displayStatistiqueMenu()
         break;
     case 5:
         display_menu();

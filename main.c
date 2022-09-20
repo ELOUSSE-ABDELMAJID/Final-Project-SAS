@@ -391,7 +391,47 @@ float    averageProductsSold()
     return average;
 }
 
-float
+float  maxProductsSold()
+{
+    int i = 0;
+    float max;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
+
+    max = sold[i].prix;
+    while (i < s)
+    {
+       if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
+       {
+            if (sold[i].prix > max)
+                max = sold[i].prix;
+       }
+       i++;
+    }
+    return max;
+}
+
+float   minProductsSold()
+{
+    int i = 0;
+    float min;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
+
+    min = sold[i].prix;
+    while (i < s)
+    {
+       if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
+       {
+            if (sold[i].prix < min)
+                min = sold[i].prix;
+       }
+       i++;
+    }
+    return min;
+}
 
 // main function 
 

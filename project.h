@@ -50,12 +50,15 @@ void    findInferiourProductsQuantity();
 
 float    totalProductsSold();
 float    averageProductsSold();
+float 	 maxProductsSold();
+float    minProductsSold();
 
 // Files Functions
  
 void    saveDataFile();
 void    readDataFromFile();
 
+// exit the programme
 void    exit_funct();
 
 #endif
