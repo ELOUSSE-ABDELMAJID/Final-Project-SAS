@@ -2,7 +2,7 @@
 
 struct Product prod[100];
 static int size = 0;
-
+static int line = 0;
 // Files Functions
 
 void    readDataFromFile()
@@ -14,20 +14,16 @@ void    readDataFromFile()
        if (feof(database))
             break;
        size++;
+       line++;
     }
     fclose(database);
-}
-
-void    update()
-{
-    
 }
 
 void    saveDataFile()
 {
     int i = 0;
 
-    FILE *database = fopen("database.txt", "a");
+    FILE *database = fopen("database.txt", "w");
     while (i < size)
     {
         fprintf(database, "%d\t%s\t%s\t%d\t%.2f\t%.2f\n", i+1, prod[i].code, prod[i].nom, prod[i].quantity, prod[i].prix, prod[i].prixTtc);
@@ -53,10 +49,16 @@ void  add_product(int n)
         scanf("%d", &prod[size].quantity);
         printf("\t\t\t  Entrez le prix du Produit : ");
         scanf("%f", &prod[size].prix);
-        prod[i].prixTtc = prod[i].prix * 0.15 + prod[i].prix;
         size++;
         i++;
     }
+    for (i = 0; i < size; i++)
+    {
+        prod[i].prixTtc = prod[i].prix * 0.15 + prod[i].prix;
+    }
+    printf("\t\t\t  #####################################################################################################\n");
+    printf("\t\t\t                                              PRODUCT ADDED SUCCESSFULLY                               \n");
+	printf("\t\t\t  #####################################################################################################\n");
     saveDataFile();
 }
 
@@ -96,8 +98,9 @@ void    buy_product()
         prod[i].date[1] = date->tm_mon+1;
         prod[i].date[2] = date->tm_year+1900;
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                Purchase Complete                                      \n");
+	    printf("\t\t\t                                                PRODUCT BUY SUCCESSFUL                                 \n");
 	    printf("\t\t\t  #####################################################################################################\n");
+        saveDataFile();
         display_menu();
     }
     else
@@ -137,6 +140,7 @@ void    modifyProductQuantity()
         }
         i++;
     }
+    saveDataFile();
     display_menu();
 }
 
@@ -173,6 +177,7 @@ void    remove_product()
         }
         i++;
     }
+    saveDataFile();
     display_menu();
 }
 
