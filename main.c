@@ -3,44 +3,40 @@
 struct Product prod[100];
 static int size = 0;
 
-void    fillWithData()
-{
-    int i = 0;
+// Files Functions
 
+void    readDataFromFile()
+{
     FILE *database = fopen("database.txt", "r");
     while (1)
     {
-       //fscanf(database, "%s%s%d%f", prod[i].code, prod[i].nom, prod[i].quantity, prod[i].prix);
-       if (feof)
-        break;
-       i++;
+       fscanf(database, "%d\t%s\t%s\t%d\t%f\t%f", &size+1, prod[size].code, prod[size].nom, &prod[size].quantity, &prod[size].prix, &prod[size].prixTtc);
+       if (feof(database))
+            break;
+       size++;
     }
     fclose(database);
 }
 
-void    saveData(int i)
+void    update()
 {
-    //FILE *database = fopen("database.txt", 'a');
-    //while (i < count)
-       // fprintf(database, "%s%s%d%.2f", prod[i].code, prod[i].nom, prod[i].quantity, prod[i].prix);
+    
 }
 
-// int    checkCode(struct Product produit)
-// {
-//     while (produit.code[0] == '\0')
-//     {
-//         fillWithData();
-//         while (i < count)
-//         {
-//             if (strcmp(tolower(produit->code), tolower(prod[i].code)) == 0)
-//                 return (2);
-//             i++;
-//         }
-        
-//     }
-//     return (1);
-    
-// }
+void    saveDataFile()
+{
+    int i = 0;
+
+    FILE *database = fopen("database.txt", "a");
+    while (i < size)
+    {
+        fprintf(database, "%d\t%s\t%s\t%d\t%.2f\t%.2f\n", i+1, prod[i].code, prod[i].nom, prod[i].quantity, prod[i].prix, prod[i].prixTtc);
+        i++;
+    }
+    fclose(database);
+}
+
+// Operations on Products Functions
 
 void  add_product(int n)
 {
@@ -58,11 +54,129 @@ void  add_product(int n)
         printf("\t\t\t  Entrez le prix du Produit : ");
         scanf("%f", &prod[size].prix);
         prod[i].prixTtc = prod[i].prix * 0.15 + prod[i].prix;
-
         size++;
         i++;
     }
+    saveDataFile();
 }
+
+void    buy_product()
+{
+    char id[15];
+    int i = 0;
+    int quantite;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
+
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez acheter : ");
+    scanf("%s", id);
+    while (i < size)
+    {
+        if (strcmp(prod[i].code, id) == 0)
+            break;
+        if (i == size - 1)
+        {
+            if (strcmp(prod[i].code, id) != 0)
+            {
+                printf("\t\t\t  #####################################################################################################\n");
+	            printf("\t\t\t                                                Product Code Not Found                                 \n");
+	            printf("\t\t\t  #####################################################################################################\n");
+                display_menu();
+            }
+        }
+        i++;
+    }
+    printf("\t\t\t  Entrez la quantite que vous voulez acheter : ");
+    scanf("%d", &quantite);
+    if (prod[i].quantity >= quantite)
+    {
+        prod[i].quantity -= quantite;
+        prod[i].date[0] = date->tm_mday;
+        prod[i].date[1] = date->tm_mon+1;
+        prod[i].date[2] = date->tm_year+1900;
+        printf("\t\t\t  #####################################################################################################\n");
+	    printf("\t\t\t                                                Purchase Complete                                      \n");
+	    printf("\t\t\t  #####################################################################################################\n");
+        display_menu();
+    }
+    else
+    {
+        printf("\t\t\t  #####################################################################################################\n");
+	    printf("\t\t\t                                                OUT OF STOCK                                           \n");
+	    printf("\t\t\t  #####################################################################################################\n");
+        display_menu();
+    }
+}
+
+void    modifyProductQuantity()
+{
+    int i = 0;
+    char id[15];
+    int quantite;
+
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez mofifier son quantite : ");
+    scanf("%s", id);
+    while (i < size)
+    {
+        if (strcmp(prod[i].code, id) == 0)
+        {
+            printf("\t\t\t  Entrez la quantity que vous voulez ajouter : ");
+            scanf("%d", &quantite);
+            prod[i].quantity += quantite;
+            break;
+        }
+        if (i == size - 1)
+        {
+            if (strcmp(prod[i].code, id) != 0)
+            {
+                printf("\t\t\t  #####################################################################################################\n");
+	            printf("\t\t\t                                                Product Code Not Found                                 \n");
+	            printf("\t\t\t  #####################################################################################################\n");
+            }
+        }
+        i++;
+    }
+    display_menu();
+}
+
+void    remove_product()
+{
+    char id[15];
+    int i = 0;
+
+    printf("\t\t\t  Entrez le Code de Produit que vous voulez Supprimer : ");
+    scanf("%s", id);
+    while (i < size)
+    {
+        if (strcmp(prod[i].code, id) == 0)
+        {
+            for (int j = i; j < size - 1; j++)
+            {
+                prod[j] = prod[j + 1];
+                size--;
+            }
+            printf("\t\t\t  #####################################################################################################\n");
+	        printf("\t\t\t                                                Product Removed Successfully                           \n");
+	        printf("\t\t\t  #####################################################################################################\n");
+            break;
+        }
+        if (i == size - 1)
+        {
+            if (strcmp(prod[i].code, id) != 0)
+            {
+                printf("\t\t\t  #####################################################################################################\n");
+	            printf("\t\t\t                                                Product Not Found                                      \n");
+	            printf("\t\t\t  #####################################################################################################\n");
+                printf("\n");
+            }
+        }
+        i++;
+    }
+    display_menu();
+}
+
+// List Products Functions
 
 void    listProductsByName()
 {
@@ -148,55 +262,7 @@ void	listProductByIndex(int index)
     printf("\t\t\t  -----------------------------------------------------\n");
 }
 
-void    buy_product()
-{
-    char id[15];
-    int i = 0;
-    int quantite;
-    time_t tm;
-    time(&tm);
-    struct tm *date = localtime(&tm);
-
-    printf("\t\t\t  Entrez le Code de Produit que vous voulez acheter : ");
-    scanf("%s", id);
-    while (i < size)
-    {
-        if (strcmp(prod[i].code, id) == 0)
-            break;
-        if (i == size - 1)
-        {
-            if (strcmp(prod[i].code, id) != 0)
-            {
-                printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Code Not Found                                 \n");
-	            printf("\t\t\t  #####################################################################################################\n");
-                display_menu();
-            }
-        }
-        i++;
-    }
-    printf("\t\t\t  Entrez la quantite que vous voulez acheter : ");
-    scanf("%d", &quantite);
-    if (prod[i].quantity >= quantite)
-    {
-        prod[i].quantity -= quantite;
-        prod[i].date[0] = date->tm_mday;
-        prod[i].date[1] = date->tm_mon+1;
-        prod[i].date[2] = date->tm_year+1900;
-        printf("Current Date: %d-%d-%d\n", prod[i].date[0], prod[i].date[1], prod[i].date[2]);
-        printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                Purchase Complete                                      \n");
-	    printf("\t\t\t  #####################################################################################################\n");
-        display_menu();
-    }
-    else
-    {
-        printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                OUT OF STOCK                                           \n");
-	    printf("\t\t\t  #####################################################################################################\n");
-        display_menu();
-    }
-}
+// Search for Products Functions
 
 void    findProductsByCode()
 {
@@ -265,86 +331,18 @@ void    findInferiourProductsQuantity()
     display_menu();
 }
 
-void    modifyProductQuantity()
-{
-    int i = 0;
-    char id[15];
-    int quantite;
-
-    printf("\t\t\t  Entrez le Code de Produit que vous voulez mofifier son quantite : ");
-    scanf("%s", id);
-    while (i < size)
-    {
-        if (strcmp(prod[i].code, id) == 0)
-        {
-            printf("\t\t\t  Entrez la quantity que vous voulez ajouter : ");
-            scanf("%d", &quantite);
-            prod[i].quantity += quantite;
-            break;
-        }
-        if (i == size - 1)
-        {
-            if (strcmp(prod[i].code, id) != 0)
-            {
-                printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Code Not Found                                 \n");
-	            printf("\t\t\t  #####################################################################################################\n");
-            }
-        }
-        i++;
-    }
-    display_menu();
-}
-
-void    remove_product()
-{
-    char id[15];
-    int i = 0;
-
-    printf("\t\t\t  Entrez le Code de Produit que vous voulez Supprimer : ");
-    scanf("%s", id);
-    while (i < size)
-    {
-        if (strcmp(prod[i].code, id) == 0)
-        {
-            for (int j = i; j < size - 1; j++)
-            {
-                prod[j] = prod[j + 1];
-                size--;
-            }
-            printf("\t\t\t  #####################################################################################################\n");
-	        printf("\t\t\t                                                Product Removed Successfully                           \n");
-	        printf("\t\t\t  #####################################################################################################\n");
-            break;
-        }
-        if (i == size - 1)
-        {
-            if (strcmp(prod[i].code, id) != 0)
-            {
-                printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Not Found                                      \n");
-	            printf("\t\t\t  #####################################################################################################\n");
-                printf("\n");
-            }
-        }
-        i++;
-    }
-    display_menu();
-}
+// Staitstiques Functions
 
 // float    totalProductsSold()
 // {
 //     int i = 0;
-//     time_t t;
 //     float total = 0;
-//     struct	tm date;
+//     int index;
 
-//     t = time(NULL);
-//     date = *localtime(&t);
-//     while (i < size)
+//     while (i < n)
 //     {
-//        if (prod[i].tim.tm_mday == date.tm_mday && prod[i].tim.tm_mon+1 == date.tm_mon+1 && prod[i].tim.tm_year+1900 == date.tm_year+1900)
-//             total += prod[i].prix;
+//         total += sold[i].prix;
+//         i++;
 //     }
 //     return total;
 // }
@@ -369,8 +367,10 @@ void    remove_product()
 // }
 
 // main function 
+
 int main()
 {
+    readDataFromFile();
 	display_menu();
     return 0;
 }

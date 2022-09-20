@@ -7,7 +7,9 @@
 #include <string.h>
 #include <time.h>
 
-// Structure
+
+// --> Structures Section
+
 struct Product {
 	char	code[15];
 	char	nom[25];
@@ -17,22 +19,42 @@ struct Product {
 	int		date[3];
 };
 
-// Functions
+// --> Functions Section
+
+// Operations on Products Functions
+
 void    add_product(int n);
-void    display_menu();
+void    buy_product();
+void    modifyProductQuantity();
+void    remove_product();
+
+// List Products Functions
+
 void	list_products();
 void    listProductsByName();
 void    listProductsByPrice();
 void	listProductByIndex(int index);
-void    buy_product();
+
+// Display Menus Functions
+
+void    display_menu();
+void    displaySearchMenu();
+void    displayStatistiqueMenu();
+
+// Search for Products Functions
 void    findProductsByCode();
 void    findProductsByQuantity();
-void    displaySearchMenu();
 void    findInferiourProductsQuantity();
-void    modifyProductQuantity();
-void    remove_product();
-void    displayStatistiqueMenu();
-void    totalProductsSold();
+
+// Statistiques Functions
+
+float    totalProductsSold();
 void    averageProductsSold();
+
+// Files Functions
+ 
+void    saveDataFile();
+void    readDataFromFile();
+void    exit_funct();
 
 #endif

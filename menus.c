@@ -1,5 +1,10 @@
 #include "project.h"
 
+void    exit_funct()
+{
+    exit(1);
+}
+
 void    displayStatistiqueMenu()
 {
     int op, n;
@@ -18,7 +23,8 @@ void    displayStatistiqueMenu()
     switch (op)
     {
     case 1:
-        //printf("\t\t\t  Le total des prix des produits vendus Ce journee : %.2f", totalProductsSold());
+        //printf("\t\t\t  Le total des prix des produits vendus Ce journee : %.2f\n", totalProductsSold());
+        display_menu();
         break;
     case 2:
         //printf("\t\t\t  la moyenne des prix des produits vendus Ce journee : %.2f", averageProductsSold());
@@ -109,7 +115,7 @@ void    display_menu()
         display_menu();
         break;
     case 2:
-        printf("Entrez le nombre de Produit a ajouter : ");
+        printf("\t\t\t   Entrez le nombre de Produit a ajouter : ");
         scanf("%d", &n);
         add_product(n);
         display_menu();
@@ -140,7 +146,7 @@ void    display_menu()
         displayStatistiqueMenu();
         break;
     case 10:
-
+        exit_funct();
         break;
     default:
         printf("\t\t\t  #####################################################################################################\n");
