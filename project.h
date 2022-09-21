@@ -21,6 +21,9 @@ struct Product {
 
 // --> Functions Section
 
+void    print_message();
+void    print_default();
+
 // Operations on Products Functions
 
 void    add_product(int n);

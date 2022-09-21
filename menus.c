@@ -5,6 +5,16 @@ void    exit_funct()
     exit(1);
 }
 
+void    print_default()
+{
+    printf("\n");
+    printf("\t\t\t  #####################################################################################################\n");
+	printf("\t\t\t  #                                       NUMBER NOT FOUND IN MENU                                    #\n");
+    printf("\t\t\t  #####################################################################################################\n");
+    printf("\n");
+    sleep(1);
+}
+
 void    displayStatistiqueMenu()
 {
     int op;
@@ -46,9 +56,7 @@ void    displayStatistiqueMenu()
         display_menu();
         break;
     default:
-        printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t  #                                              NUMBER NOT FOUND IN MENU                             #\n");
-        printf("\t\t\t  #####################################################################################################\n");
+        print_default();
         display_menu();
         break;
     }
@@ -84,9 +92,7 @@ void    displaySearchMenu()
         display_menu();
         break;
     default:
-        printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t  #                                              NUMBER NOT FOUND IN MENU                             #\n");
-        printf("\t\t\t  #####################################################################################################\n");
+        print_default();
         display_menu();
         break;
     }
@@ -154,9 +160,7 @@ void    display_menu()
         exit_funct();
         break;
     default:
-        printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t  #                                              NUMBER NOT FOUND IN MENU                             #\n");
-        printf("\t\t\t  #####################################################################################################\n");
+        print_default();
         display_menu();
         break;
     }  
