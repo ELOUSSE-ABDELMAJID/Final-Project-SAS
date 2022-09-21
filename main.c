@@ -34,6 +34,24 @@ void    saveDataFile()
 
 // Operations on Products Functions
 
+void    checkDuplicatedCode(char code[15])
+{
+    int i = 0;
+    while (i < size)
+    {
+        if (code == prod[i].code)
+        {
+            printf("\t\t\t  #####################################################################################################\n");
+	        printf("\t\t\t  #                                         Code Already Exists                                       #\n");
+	        printf("\t\t\t  #####################################################################################################\n");
+            printf("\n");
+            sleep(2);
+            display_menu();
+        }
+        i++;
+    }
+}
+
 void  add_product(int n)
 {
     int i = 0;
@@ -43,6 +61,7 @@ void  add_product(int n)
         printf("\t\t\t  # Product Number : %d\n", size+1);
         printf("\t\t\t  Entrez le code du Produit : ");
         scanf("%s", prod[size].code);
+        checkDuplicatedCode(prod[size].code);
         printf("\t\t\t  Entrez le nom du Produit : ");
         scanf("%s", prod[size].nom);
         printf("\t\t\t  Entrez la quantite du Produit : ");
@@ -57,9 +76,11 @@ void  add_product(int n)
         prod[i].prixTtc = prod[i].prix * 0.15 + prod[i].prix;
     }
     printf("\t\t\t  #####################################################################################################\n");
-    printf("\t\t\t                                              PRODUCT ADDED SUCCESSFULLY                               \n");
+    printf("\t\t\t  #                                       PRODUCT ADDED SUCCESSFULLY                                  #\n");
 	printf("\t\t\t  #####################################################################################################\n");
+    printf("\n");
     saveDataFile();
+    sleep(1);
 }
 
 void    buy_product()
@@ -82,8 +103,9 @@ void    buy_product()
             if (strcmp(prod[i].code, id) != 0)
             {
                 printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Code Not Found                                 \n");
+	            printf("\t\t\t  #                                         Product Code Not Found                                    #\n");
 	            printf("\t\t\t  #####################################################################################################\n");
+                printf("\n");
                 display_menu();
             }
         }
@@ -97,7 +119,7 @@ void    buy_product()
         prod[i].date[0] = date->tm_mday;
         prod[i].date[1] = date->tm_mon+1;
         prod[i].date[2] = date->tm_year+1900;
-        // Save products sold in the sold array
+        // Save products sold in the sold Products array
         strcpy(sold[s].code,prod[i].code);
         strcpy(sold[s].nom,prod[i].nom);
         sold[s].quantity = prod[i].quantity;
@@ -108,16 +130,18 @@ void    buy_product()
         sold[s].date[2] = prod[i].date[2];
         s++;
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                PRODUCT BUY SUCCESSFUL                                 \n");
+	    printf("\t\t\t  #                                         PRODUCT BUY SUCCESSFULL                                   #\n");
 	    printf("\t\t\t  #####################################################################################################\n");
+        printf("\n");
         saveDataFile();
         display_menu();
     }
     else
     {
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                OUT OF STOCK                                           \n");
+	    printf("\t\t\t  #                                              OUT OF STOCK                                         #\n");
 	    printf("\t\t\t  #####################################################################################################\n");
+        printf("\n");
         display_menu();
     }
 }
@@ -134,7 +158,7 @@ void    modifyProductQuantity()
     {
         if (strcmp(prod[i].code, id) == 0)
         {
-            printf("\t\t\t  Entrez la quantity que vous voulez ajouter : ");
+            printf("\n\t\t\t  Entrez la quantity que vous voulez ajouter : ");
             scanf("%d", &quantite);
             prod[i].quantity += quantite;
             break;
@@ -144,8 +168,9 @@ void    modifyProductQuantity()
             if (strcmp(prod[i].code, id) != 0)
             {
                 printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Code Not Found                                 \n");
+	            printf("\t\t\t  #                                         Product Code Not Found                                    #\n");
 	            printf("\t\t\t  #####################################################################################################\n");
+                printf("\n");
             }
         }
         i++;
@@ -178,8 +203,9 @@ void    remove_product()
             }
             size--;
             printf("\t\t\t  #####################################################################################################\n");
-	        printf("\t\t\t                                                Product Removed Successfully                           \n");
+	        printf("\t\t\t  #                                         Product Removed Successfully                              #\n");
 	        printf("\t\t\t  #####################################################################################################\n");
+            printf("\n");
             break;
         }
         if (i == size - 1)
@@ -187,7 +213,7 @@ void    remove_product()
             if (strcmp(prod[i].code, id) != 0)
             {
                 printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Not Found                                      \n");
+	            printf("\t\t\t  #                                         Product Code Not Found                                    #\n");
 	            printf("\t\t\t  #####################################################################################################\n");
                 printf("\n");
             }
@@ -211,14 +237,17 @@ void    listProductsByName()
       {
          if(strcmp(prod[i].nom,prod[j].nom) > 0)
          {
+            // Copy the Product in the temp
             strcpy(temp.nom,prod[i].nom);
             strcpy(temp.code,prod[i].code);
             temp.quantity = prod[i].quantity;
             temp.prix = prod[i].prix;
+            // Copy the next product in product
             strcpy(prod[i].nom,prod[j].nom);
             strcpy(prod[i].code,prod[j].code);
             prod[i].quantity = prod[j].quantity;
             prod[i].prix = prod[j].prix;
+            // copy the temp in the next product
             strcpy(prod[j].nom,temp.nom);
             strcpy(prod[j].code,temp.code);
             prod[j].quantity = temp.quantity;
@@ -246,10 +275,12 @@ void    listProductsByPrice()
                 tmp.quantity = prod[i].quantity;
                 strcpy(tmp.nom,prod[i].nom);
                 strcpy(tmp.code,prod[i].code);
+                //
                 prod[i].prix = prod[j].prix;
                 prod[i].quantity = prod[j].quantity;
                 strcpy(prod[i].nom,prod[j].nom);
                 strcpy(prod[i].code,prod[j].code);
+                //
                 prod[j].prix = tmp.prix;
                 prod[j].quantity = tmp.quantity;
                 strcpy(prod[j].nom,tmp.nom);
@@ -264,24 +295,24 @@ void	list_products()
 {
     int i = 0;
 
-    printf("\t\t\t  -----------------------------------------------------\n");
-    printf("\t\t\t  |  PROD ID  | PROD NOM |  PROD PRIX  | PROD PRIXTTC | \n");
-    printf("\t\t\t  -----------------------------------------------------\n");
+    printf("\t\t\t  ------------------------------------------------------------------------------------\n");
+    printf("\t\t\t  |  PROD ID  |   PROD Code   |    PROD NOM    |    PROD PRIX    |   PROD PRIXTTC   | \n");
+    printf("\t\t\t  ------------------------------------------------------------------------------------\n");
 	while (i < size)
     {
-        printf("\t\t\t      %d\t\t%s\t   %.2f\t     %.2f\n", i+1, prod[i].nom, prod[i].prix, prod[i].prixTtc);
-        printf("\t\t\t  -----------------------------------------------------\n");
+        printf("\t\t\t      %d\t\t%s\t %s\t   %.2f\t     %.2f\n", i+1, prod[i].code, prod[i].nom, prod[i].prix, prod[i].prixTtc);
+        printf("\t\t\t  ------------------------------------------------------------------------------------\n");
         i++;
     }
 }
 
 void	listProductByIndex(int index)
 {
-    printf("\t\t\t  -----------------------------------------------------\n");
-    printf("\t\t\t  |  PROD ID  | PROD NOM |  PROD PRIX  | PROD PRIXTTC | \n");
-    printf("\t\t\t  -----------------------------------------------------\n");
-    printf("\t\t\t      %d\t\t%s\t   %.2f\t     %.2f\n", index+1, prod[index].nom, prod[index].prix, prod[index].prixTtc);
-    printf("\t\t\t  -----------------------------------------------------\n");
+    printf("\t\t\t  ------------------------------------------------------------------------------------\n");
+    printf("\t\t\t  |  PROD ID  |   PROD Code   |    PROD NOM    |    PROD PRIX    |   PROD PRIXTTC   | \n");
+    printf("\t\t\t  ------------------------------------------------------------------------------------\n");
+    printf("\t\t\t      %d\t\t%s\t %s\t   %.2f\t     %.2f\n", index+1, prod[index].code, prod[index].nom, prod[index].prix, prod[index].prixTtc);
+    printf("\t\t\t  ------------------------------------------------------------------------------------\n");
 }
 
 // Search for Products Functions
@@ -302,7 +333,7 @@ void    findProductsByCode()
             if (strcmp(prod[i].code, id) != 0)
             {
                 printf("\t\t\t  #####################################################################################################\n");
-	            printf("\t\t\t                                                Product Not Found                                      \n");
+	            printf("\t\t\t  #                                         Product Code Not Found                                    #\n");
 	            printf("\t\t\t  #####################################################################################################\n");
                 printf("\n");
             }
@@ -332,7 +363,7 @@ void    findProductsByQuantity()
     if (found)
     {
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                Product Not Found                                      \n");
+        printf("\t\t\t  #                                         Product Code Not Found                                    #\n");
         printf("\t\t\t  #####################################################################################################\n");
         printf("\n");
     }
@@ -343,11 +374,17 @@ void    findInferiourProductsQuantity()
 {
     int i = 0;
 
-    printf("\t\t\t  Les Produits avec une quantite inferiour a 3 : \n");
     while (i < size)
     {
         if (prod[i].quantity < 3)
             listProductByIndex(i);
+        if (i == size - 1 && prod[i].quantity >= 3)
+        {
+            printf("\t\t\t  #####################################################################################################\n");
+	        printf("\t\t\t  #                                         Product Code Not Found                                    #\n");
+	        printf("\t\t\t  #####################################################################################################\n");
+            printf("\n");
+        }
         i++;
     }
     displaySearchMenu();
@@ -391,27 +428,6 @@ float    averageProductsSold()
     return average;
 }
 
-float  maxProductsSold()
-{
-    int i = 0;
-    float max;
-    time_t tm;
-    time(&tm);
-    struct tm *date = localtime(&tm);
-
-    max = sold[i].prix;
-    while (i < s)
-    {
-       if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
-       {
-            if (sold[i].prix > max)
-                max = sold[i].prix;
-       }
-       i++;
-    }
-    return max;
-}
-
 float   minProductsSold()
 {
     int i = 0;
@@ -420,7 +436,7 @@ float   minProductsSold()
     time(&tm);
     struct tm *date = localtime(&tm);
 
-    min = sold[i].prix;
+    min = sold[0].prix;
     while (i < s)
     {
        if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
@@ -433,11 +449,33 @@ float   minProductsSold()
     return min;
 }
 
+float  maxProductsSold()
+{
+    int i = 0;
+    float max;
+    time_t tm;
+    time(&tm);
+    struct tm *date = localtime(&tm);
+
+    max = sold[0].prix;
+    while (i < s)
+    {
+       if (sold[i].date[0] == date->tm_mday && sold[i].date[1] == date->tm_mon+1 && sold[i].date[2] == date->tm_year+1900)
+       {
+            if (sold[i].prix > max)
+                max = sold[i].prix;
+       }
+       i++;
+    }
+    return max;
+}
+
 // main function 
 
 int main()
 {
     readDataFromFile();
+    system("clear");
 	display_menu();
     return 0;
 }

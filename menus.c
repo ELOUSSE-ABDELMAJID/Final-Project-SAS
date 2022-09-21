@@ -7,9 +7,9 @@ void    exit_funct()
 
 void    displayStatistiqueMenu()
 {
-    int op, n;
+    int op;
 	printf("\t\t\t  #####################################################################################################\n");
-	printf("\t\t\t                                                STATISTIQUES MENU                                      \n");
+	printf("\t\t\t  #                                              STATISTIQUES MENU                                    #\n");
 	printf("\t\t\t  #####################################################################################################\n");
     printf("\t\t\t   1) Afficher le total des prix des produits vendus en journée courante  \n");
     printf("\t\t\t   2) Afficher la moyenne des prix des produits vendus en journée courante \n");
@@ -23,19 +23,23 @@ void    displayStatistiqueMenu()
     switch (op)
     {
     case 1:
-        printf("\t\t\t  Le total des prix des produits vendus Ce journee : %.2f\n", totalProductsSold());
+        sleep(1);
+        printf("\t\t\t  Le total des prix des produits vendus Ce journee : --> %.2f <--\n\n", totalProductsSold());
         displayStatistiqueMenu();
         break;
     case 2:
-        printf("\t\t\t  la moyenne des prix des produits vendus Ce journee : %.2f\n", averageProductsSold());
+        sleep(1);
+        printf("\t\t\t  la moyenne des prix des produits vendus Ce journee : --> %.2f <--\n\n", averageProductsSold());
         displayStatistiqueMenu();
         break;
     case 3:
-        printf("\t\t\t  Le Max des prix des produits vendus Ce journee : %.2f\n", maxProductsSold());
+        sleep(1);
+        printf("\t\t\t  Le Max des prix des produits vendus Ce journee : --> %.2f <--\n\n", maxProductsSold());
         displayStatistiqueMenu();
         break;
     case 4:
-        printf("\t\t\t  le Min des prix des produits vendus Ce journee : %.2f\n", minProductsSold());
+        sleep(1);
+        printf("\t\t\t  le Min des prix des produits vendus Ce journee : --> %.2f <--\n\n", minProductsSold());
         displayStatistiqueMenu();
         break;
     case 5:
@@ -43,7 +47,7 @@ void    displayStatistiqueMenu()
         break;
     default:
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                NUMBER NOT FOUND IN MENU                               \n");
+	    printf("\t\t\t  #                                              NUMBER NOT FOUND IN MENU                             #\n");
         printf("\t\t\t  #####################################################################################################\n");
         display_menu();
         break;
@@ -53,10 +57,9 @@ void    displayStatistiqueMenu()
 
 void    displaySearchMenu()
 {
-
-    int op, n;
+    int op;
 	printf("\t\t\t  #####################################################################################################\n");
-	printf("\t\t\t                                                Search MENU                                            \n");
+	printf("\t\t\t  #                                              Search MENU                                          #\n");
 	printf("\t\t\t  #####################################################################################################\n");
     printf("\t\t\t   1) Rechercher un produit par son code  \n");
     printf("\t\t\t   2) Rechercher un produit par son quantite \n");
@@ -82,7 +85,7 @@ void    displaySearchMenu()
         break;
     default:
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                NUMBER NOT FOUND IN MENU                               \n");
+	    printf("\t\t\t  #                                              NUMBER NOT FOUND IN MENU                             #\n");
         printf("\t\t\t  #####################################################################################################\n");
         display_menu();
         break;
@@ -92,10 +95,9 @@ void    displaySearchMenu()
 
 void    display_menu()
 {
-
     int op, n;
 	printf("\t\t\t  #####################################################################################################\n");
-	printf("\t\t\t                                                MENU                                                    \n");
+	printf("\t\t\t  #                                              MENU                                                 #\n");
 	printf("\t\t\t  #####################################################################################################\n");
     printf("\t\t\t   1) Ajouter un seul produit   \n");
     printf("\t\t\t   2) Ajouter Plusieurs Produit \n");
@@ -153,7 +155,7 @@ void    display_menu()
         break;
     default:
         printf("\t\t\t  #####################################################################################################\n");
-	    printf("\t\t\t                                                NUMBER NOT FOUND IN MENU                               \n");
+	    printf("\t\t\t  #                                              NUMBER NOT FOUND IN MENU                             #\n");
         printf("\t\t\t  #####################################################################################################\n");
         display_menu();
         break;

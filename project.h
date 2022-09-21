@@ -50,8 +50,8 @@ void    findInferiourProductsQuantity();
 
 float    totalProductsSold();
 float    averageProductsSold();
-float 	 maxProductsSold();
 float    minProductsSold();
+float 	 maxProductsSold();
 
 // Files Functions
  
@@ -60,5 +60,7 @@ void    readDataFromFile();
 
 // exit the programme
 void    exit_funct();
+// Check for duplicated code
+void    checkDuplicatedCode(char code[15]);
 
 #endif
